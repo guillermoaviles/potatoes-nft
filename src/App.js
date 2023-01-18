@@ -1,18 +1,40 @@
 import React from 'react';
 import './App.css';
-import {Route, Routes} from "react-router-dom";
-import Header from './components/Header';
-import Main from './components/Main';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createClient, configureChains, WagmiConfig } from 'wagmi';
+import { publicProvider } from 'wagmi/providers/public';
+import { mainnet } from "wagmi/chains";
 
+import Signin from './components/signin.jsx';
+import Mint from './components/mint.jsx';
+
+
+const { provider, webSocketProvider } = configureChains([mainnet], [
+  publicProvider(),
+]);
+
+const client = createClient({
+  provider,
+  webSocketProvider,
+  autoConnect: true,
+});
+
+const router = createBrowserRouter([
+  {
+    path: '/signin',
+    element: <Signin />,
+  },
+  {
+    path: '/mint',
+    element: <Mint />,
+  },
+]);
 
 function App() {
   return (
-    <div className="App">
-      <Header/>
-      <Routes>
-        <Route path='/' element={<Main />}/>
-      </Routes>
-    </div>
+    <WagmiConfig client={client}>
+      <RouterProvider router={router} />
+    </WagmiConfig>
   );
 }
 
