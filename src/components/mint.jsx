@@ -5,6 +5,7 @@ import Header from './Header';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import bgrdImg from "../media/wooden-floor.jpeg"
 
 export default function Mint() {
     const navigate = useNavigate();
@@ -35,10 +36,8 @@ export default function Mint() {
     }
 
     return (
-        <div className="App">
-            <Header />
-            <h3>User session:</h3>
-            <pre>{JSON.stringify(session, null, 2)}</pre>
+        <div className="App" style={{ backgroundImage: `url(${bgrdImg})` }}>
+            <Header session={session} signOut={signOut}/>
             <p style={{ marginTop: "10vh", fontSize: "1.5vh", width: "500px" }}>
                 The cost of each potato follows a bonding curve, increasing
                 10% in price after every mint. Whenever a new potato is
@@ -62,9 +61,6 @@ export default function Mint() {
             >
                 Mint
             </Fab>
-            <button type="button" onClick={signOut}>
-                Sign out
-            </button>
         </div>
     );
 }

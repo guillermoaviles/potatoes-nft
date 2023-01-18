@@ -1,9 +1,10 @@
 import icon from '../media/potato.png';
 import {Link} from "react-router-dom";
 import "../styles/Header.scss";
+import Chip from '@mui/material/Chip';
+import truncateEthAddress from 'truncate-eth-address'
 
-
-const Header = () => {
+const Header = ({ session, signOut }) => {
 
     return (
       <header className="navbar">
@@ -19,6 +20,8 @@ const Header = () => {
                 Potatoes
             </h1>
         </div>
+        <Chip label={truncateEthAddress(session.address)} color="primary" />
+        <Chip label="Disconnect" onClick={signOut} color="primary"/>
       </header>
     )
 }
